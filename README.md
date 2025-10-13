@@ -5,11 +5,11 @@ A reusable documentation scaffold for LLM-assisted software projects. This templ
 ## Why LLM-DocKit?
 
 When working with LLMs on software projects, you need:
-- [x] **Clear rules** for how LLMs should work (language, commits, versioning)
-- [x] **Session continuity** so the next LLM knows what happened before
-- [x] **Documentation discipline** that keeps context synchronized
-- [x] **Version management** that prevents breaking changes
-- [x] **Handoff protocol** for multi-LLM or human+LLM collaboration
+- **Clear rules** for how LLMs should work (language, commits, versioning)
+- **Session continuity** so the next LLM knows what happened before
+- **Documentation discipline** that keeps context synchronized
+- **Version management** that prevents breaking changes
+- **Handoff protocol** for multi-LLM or human+LLM collaboration
 
 LLM-DocKit solves this by providing battle-tested templates and workflows.
 
@@ -131,11 +131,11 @@ This scaffold was extracted from [PiHA-Deployer](https://github.com/cdchushig/Pi
 
 ## Who Should Use This?
 
-- [x] Developers working with LLM assistants (Claude, ChatGPT, etc.)
-- [x] Teams collaborating with multiple LLMs on the same project
-- [x] Projects requiring strict documentation discipline
-- [x] Long-running projects where context must be preserved across sessions
-- [x] Solo developers who want better documentation habits
+- Developers working with LLM assistants (Claude, ChatGPT, etc.)
+- Teams collaborating with multiple LLMs on the same project
+- Projects requiring strict documentation discipline
+- Long-running projects where context must be preserved across sessions
+- Solo developers who want better documentation habits
 
 ## Getting Help
 

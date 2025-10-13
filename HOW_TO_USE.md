@@ -5,10 +5,20 @@ This guide walks you through setting up a new project using LLM-DocKit.
 ## Quick Start (5 Minutes)
 
 ### 1. Fork or Clone This Repository
+
+**Linux/macOS/Git Bash:**
 ```bash
 git clone https://github.com/<your-username>/LLM-DocKit.git my-new-project
 cd my-new-project
 rm -rf .git
+git init
+```
+
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/<your-username>/LLM-DocKit.git my-new-project
+cd my-new-project
+Remove-Item -Recurse -Force .git
 git init
 ```
 
@@ -48,11 +58,11 @@ $language = "Spanish"
 $today = Get-Date -Format "yyyy-MM-dd"
 
 Get-ChildItem -Recurse -Filter *.md | ForEach-Object {
-    (Get-Content $_.FullName) `
+    (Get-Content $_.FullName -Encoding UTF8) `
         -replace '<PROJECT_NAME>', $projectName `
         -replace '<CONVERSATION_LANGUAGE>', $language `
         -replace '<YYYY-MM-DD>', $today |
-    Set-Content $_.FullName
+    Set-Content $_.FullName -Encoding UTF8
 }
 ```
 
@@ -272,11 +282,11 @@ docs/
 
 ## Next Steps
 
-1. [x] Complete the Quick Start steps above
-2. [x] Customize [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)
-3. [x] Update [docs/STRUCTURE.md](docs/STRUCTURE.md) with your layout
-4. [x] Have your first LLM session
-5. [x] Commit everything and push to your repository
+1. [ ] Complete the Quick Start steps above
+2. [ ] Customize [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)
+3. [ ] Update [docs/STRUCTURE.md](docs/STRUCTURE.md) with your layout
+4. [ ] Have your first LLM session
+5. [ ] Commit everything and push to your repository
 
 ## Getting Help
 
