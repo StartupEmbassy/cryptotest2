@@ -5,11 +5,11 @@ A reusable documentation scaffold for LLM-assisted software projects. This templ
 ## Why LLM-DocKit?
 
 When working with LLMs on software projects, you need:
-- ✅ **Clear rules** for how LLMs should work (language, commits, versioning)
-- ✅ **Session continuity** so the next LLM knows what happened before
-- ✅ **Documentation discipline** that keeps context synchronized
-- ✅ **Version management** that prevents breaking changes
-- ✅ **Handoff protocol** for multi-LLM or human+LLM collaboration
+- [x] **Clear rules** for how LLMs should work (language, commits, versioning)
+- [x] **Session continuity** so the next LLM knows what happened before
+- [x] **Documentation discipline** that keeps context synchronized
+- [x] **Version management** that prevents breaking changes
+- [x] **Handoff protocol** for multi-LLM or human+LLM collaboration
 
 LLM-DocKit solves this by providing battle-tested templates and workflows.
 
@@ -59,22 +59,22 @@ Before each work session, give your LLM this file: **[LLM_START_HERE.md](LLM_STA
 
 ## Features
 
-### 🤖 Multi-LLM Collaboration
+### Multi-LLM Collaboration
 Different LLMs can work on the same project by reading [docs/llm/HANDOFF.md](docs/llm/HANDOFF.md) to understand current state.
 
-### 📝 Automatic Documentation
+### Automatic Documentation
 Every LLM session must update documentation, ensuring nothing is lost between sessions.
 
-### 🔢 Version Management
+### Version Management
 Semantic versioning rules prevent breaking changes and keep components synchronized.
 
-### 🚫 "Do Not Touch" Zones
+### "Do Not Touch" Zones
 Mark critical code areas that shouldn't be modified without explicit permission.
 
-### 🌍 Language Flexibility
+### Language Flexibility
 Configure conversation language (Spanish, English, etc.) while keeping code/docs in English.
 
-### 📋 Commit Message Standards
+### Commit Message Standards
 Every LLM response includes suggested commit info (title + description) for consistency.
 
 ## Typical Workflows
@@ -131,18 +131,18 @@ This scaffold was extracted from [PiHA-Deployer](https://github.com/cdchushig/Pi
 
 ## Who Should Use This?
 
-- ✅ Developers working with LLM assistants (Claude, ChatGPT, etc.)
-- ✅ Teams collaborating with multiple LLMs on the same project
-- ✅ Projects requiring strict documentation discipline
-- ✅ Long-running projects where context must be preserved across sessions
-- ✅ Solo developers who want better documentation habits
+- [x] Developers working with LLM assistants (Claude, ChatGPT, etc.)
+- [x] Teams collaborating with multiple LLMs on the same project
+- [x] Projects requiring strict documentation discipline
+- [x] Long-running projects where context must be preserved across sessions
+- [x] Solo developers who want better documentation habits
 
 ## Getting Help
 
-- 📖 Read the [complete setup guide](HOW_TO_USE.md)
-- 🐛 [Report issues](https://github.com/cdchushig/LLM-DocKit/issues)
-- 💡 [Suggest improvements](https://github.com/cdchushig/LLM-DocKit/pulls)
-- 🌟 Check the [PiHA-Deployer example](https://github.com/cdchushig/PiHA-Deployer)
+- Read the [complete setup guide](HOW_TO_USE.md)
+- [Report issues](https://github.com/cdchushig/LLM-DocKit/issues)
+- [Suggest improvements](https://github.com/cdchushig/LLM-DocKit/pulls)
+- Check the [PiHA-Deployer example](https://github.com/cdchushig/PiHA-Deployer)
 
 ## Contributing
 

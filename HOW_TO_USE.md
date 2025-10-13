@@ -19,22 +19,40 @@ Search and replace the following placeholders throughout all files:
 | Placeholder | Replace With | Where |
 |-------------|--------------|-------|
 | `<PROJECT_NAME>` | Your actual project name | All documentation files |
-| `<CONVERSATION_LANGUAGE>` | Language for LLM conversations (e.g., Spanish, English) | [LLM_START_HERE.md](LLM_START_HERE.md#L17) |
+| `<CONVERSATION_LANGUAGE>` | Language for LLM conversations (e.g., Spanish, English) | [LLM_START_HERE.md](LLM_START_HERE.md) |
 | `<YYYY-MM-DD>` | Current date in ISO format | [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md), [docs/llm/HANDOFF.md](docs/llm/HANDOFF.md) |
 
-**Quick command** (Linux/Mac):
+**Quick command (Linux with GNU sed)**:
 ```bash
-# Replace project name
-find . -type f -name "*.md" -exec sed -i 's/<PROJECT_NAME>/YourProjectName/g' {} +
+# Replace all placeholders at once
+find . -type f -name "*.md" -exec sed -i \
+  -e 's/<PROJECT_NAME>/YourProjectName/g' \
+  -e 's/<CONVERSATION_LANGUAGE>/Spanish/g' \
+  -e "s/<YYYY-MM-DD>/$(date +%Y-%m-%d)/g" {} +
+```
 
-# Replace conversation language
-find . -type f -name "*.md" -exec sed -i 's/<CONVERSATION_LANGUAGE>/Spanish/g' {} +
+**macOS (BSD sed requires empty string after -i)**:
+```bash
+# Replace all placeholders at once
+find . -type f -name "*.md" -exec sed -i '' \
+  -e 's/<PROJECT_NAME>/YourProjectName/g' \
+  -e 's/<CONVERSATION_LANGUAGE>/Spanish/g' \
+  -e "s/<YYYY-MM-DD>/$(date +%Y-%m-%d)/g" {} +
 ```
 
 **Windows (PowerShell)**:
 ```powershell
+# Replace all placeholders at once
+$projectName = "YourProjectName"
+$language = "Spanish"
+$today = Get-Date -Format "yyyy-MM-dd"
+
 Get-ChildItem -Recurse -Filter *.md | ForEach-Object {
-    (Get-Content $_.FullName) -replace '<PROJECT_NAME>', 'YourProjectName' | Set-Content $_.FullName
+    (Get-Content $_.FullName) `
+        -replace '<PROJECT_NAME>', $projectName `
+        -replace '<CONVERSATION_LANGUAGE>', $language `
+        -replace '<YYYY-MM-DD>', $today |
+    Set-Content $_.FullName
 }
 ```
 
@@ -152,9 +170,9 @@ When bumping versions:
 ### Documentation Maintenance
 
 Keep these files synchronized:
-- [LLM_START_HERE.md](LLM_START_HERE.md) "Current Focus" ↔️ [docs/llm/HANDOFF.md](docs/llm/HANDOFF.md) "Current Status"
-- [docs/STRUCTURE.md](docs/STRUCTURE.md) ↔️ actual folder structure
-- [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md) ↔️ architecture reality
+- [LLM_START_HERE.md](LLM_START_HERE.md) "Current Focus" <-> [docs/llm/HANDOFF.md](docs/llm/HANDOFF.md) "Current Status"
+- [docs/STRUCTURE.md](docs/STRUCTURE.md) <-> actual folder structure
+- [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md) <-> architecture reality
 
 ## Common Scenarios
 
@@ -254,11 +272,11 @@ docs/
 
 ## Next Steps
 
-1. ✅ Complete the Quick Start steps above
-2. ✅ Customize [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)
-3. ✅ Update [docs/STRUCTURE.md](docs/STRUCTURE.md) with your layout
-4. ✅ Have your first LLM session
-5. ✅ Commit everything and push to your repository
+1. [x] Complete the Quick Start steps above
+2. [x] Customize [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)
+3. [x] Update [docs/STRUCTURE.md](docs/STRUCTURE.md) with your layout
+4. [x] Have your first LLM session
+5. [x] Commit everything and push to your repository
 
 ## Getting Help
 

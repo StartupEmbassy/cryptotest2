@@ -23,7 +23,7 @@ Use this template to document how the repository is organized. Update the table 
 | docs/operations/ | Runbooks and operational procedures | Recommended |
 | src/ | Application or library source code | Optional |
 | scripts/ | Utility scripts or tooling | Optional |
-| 	ests/ | Automated tests | Optional |
+| tests/ | Automated tests | Optional |
 | .github/ | Issue/PR templates and workflows | Optional |
 
 ## Custom Modules or Packages
