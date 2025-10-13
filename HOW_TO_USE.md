@@ -117,6 +117,8 @@ rm -rf src/
 mv src/ cli/
 ```
 
+**Important**: After removing unnecessary directories, review and customize [.gitignore](.gitignore) for your tech stack. The default includes patterns for Node.js, Python, Ruby, Go, and Rust. Remove or add sections as needed, and uncomment lock file ignores if desired.
+
 ### 5. Start Your First LLM Session
 
 1. Share [LLM_START_HERE.md](LLM_START_HERE.md) with your LLM

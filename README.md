@@ -22,17 +22,27 @@ git clone https://github.com/<your-username>/LLM-DocKit.git my-new-project
 cd my-new-project
 ```
 
-### 2. Follow the Setup Guide
+### 2. After Cloning - Critical First Steps
+
+**Before writing any code**, complete these essential setup tasks:
+
+1. **Replace all placeholders** - Search and replace `<PROJECT_NAME>`, `<CONVERSATION_LANGUAGE>`, and `<YYYY-MM-DD>` throughout all `.md` files (see [HOW_TO_USE.md](HOW_TO_USE.md#2-replace-project-name-placeholders) for commands)
+2. **Remove unused directories** - Delete `src/`, `scripts/`, or `tests/` if you don't need them
+3. **Review .gitignore** - Customize for your tech stack (Python, Node.js, Go, etc.)
+4. **Verify all links work** - Check that file references in documentation point to existing files
+
+**Why this matters**: Skipping these steps means placeholders will leak into your commits and documentation links will break.
+
+### 3. Follow the Setup Guide
 Read **[HOW_TO_USE.md](HOW_TO_USE.md)** for complete instructions.
 
 **5-minute version:**
-1. Replace `<PROJECT_NAME>` in all files with your project name
-2. Update [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md) with your project vision
-3. Customize [LLM_START_HERE.md](LLM_START_HERE.md) rules
-4. Remove optional folders you don't need (src/, scripts/, tests/)
-5. Start your first LLM session!
+1. Update [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md) with your project vision
+2. Customize [LLM_START_HERE.md](LLM_START_HERE.md) rules for your workflow
+3. Document your structure in [docs/STRUCTURE.md](docs/STRUCTURE.md)
+4. Start your first LLM session!
 
-### 3. Share with Your LLM
+### 4. Share with Your LLM
 Before each work session, give your LLM this file: **[LLM_START_HERE.md](LLM_START_HERE.md)**
 
 ## What's Included
