@@ -63,7 +63,6 @@ go.work
 
 # Rust
 target/
-Cargo.lock
 
 # Build outputs
 dist/
