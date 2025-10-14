@@ -49,7 +49,7 @@ describe('formatCurrency', () => {
 ```
 **Run command:**
 ```bash
-pnpm test:unit
+npm run test:unit
 ```
 
 ### 2. Integration Tests (API contract tests)
@@ -117,7 +117,7 @@ describe('GET /api/prices', () => {
 ```
 **Run command:**
 ```bash
-pnpm test:integration
+npm run test:integration
 ```
 
 ### 3. Component Tests (UI)
@@ -161,7 +161,7 @@ describe('PriceCard', () => {
 ```
 **Run command:**
 ```bash
-pnpm test:components
+npm run test:components
 ```
 
 ### 4. End-to-End Tests (E2E)
@@ -205,7 +205,7 @@ test('unauthenticated users redirect to login', async ({ page }) => {
 ```
 **Run command:**
 ```bash
-pnpm test:e2e
+npm run test:e2e
 ```
 > Note: E2E tests are optional for the MVP but strongly recommended before production.
 
@@ -275,17 +275,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-      - run: pnpm install
-      - run: pnpm lint
-      - run: pnpm test:unit --coverage
-      - run: pnpm test:integration
+          cache: npm
+      - run: npm install
+      - run: npm run lint
+      - run: npm run test:unit --coverage
+      - run: npm run test:integration
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage/coverage-final.json
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:

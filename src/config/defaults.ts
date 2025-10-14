@@ -6,6 +6,9 @@
 export const DEFAULT_BASE_CURRENCY = 'USD';
 export const DEFAULT_TIMEZONE = 'Europe/Madrid';
 
+export const FALLBACK_SUPABASE_URL = 'https://example.supabase.co';
+export const FALLBACK_SUPABASE_ANON_KEY = 'public-anon-key';
+
 export const RATE_LIMIT_REQUESTS_PER_MINUTE = 60;
 export const CACHE_S_MAX_AGE_SECONDS = 60;
 export const CACHE_STALE_WHILE_REVALIDATE_SECONDS = 120;

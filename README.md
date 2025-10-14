@@ -51,7 +51,17 @@ Each module should separate UI (`components/`), hooks (`hooks/`), services (`ser
   - Cache headers: `s-maxage=60`, `stale-while-revalidate=120`
   - Rate limit: 60 requests per minute per IP
 - `GET /api/history?symbol=btc&vs=usd&range=24h`
-  - Response: ordered array of `{ "t": epoch_ms, "p": number }`
+  - Response:
+    ```json
+    {
+      "symbol": "btc",
+      "vs": "usd",
+      "range": "24h",
+      "series": [
+        { "t": 1699790143000, "p": 44850.25 }
+      ]
+    }
+    ```
   - Same cache headers and rate limit as `/api/prices`
 - `GET /healthz`
   - Response: `{ "status": "ok", "version": string, "time": ISO string, "env": "prod" }`

@@ -95,6 +95,7 @@ coverage/
 .nyc_output/
 test-results/
 playwright-report/
+nul
 
 # IDE specific
 .vscode/settings.json

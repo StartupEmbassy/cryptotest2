@@ -239,7 +239,7 @@ Symptoms: logs show 429 errors from CoinGecko.
 
 ### Caching strategy review
 - Current server cache: `s-maxage=60`, `stale-while-revalidate=120`.
-- Current client cache: React Query `staleTime=60000`, `cacheTime=300000`.
+- Current client cache: React Query `staleTime=60000`, `gcTime=300000`.
 - If latency persists: increase `staleTime` to 90s, add Vercel edge caching (KV), prefetch additional ranges on dashboard load.
 
 ### Database query optimization

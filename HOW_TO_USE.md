@@ -18,16 +18,16 @@ Always share `LLM_START_HERE.md` with any LLM agent before work starts.
 ## Suggested implementation flow
 
 1. **Prepare the environment**
-   - Node.js 20 or later, pnpm recommended.
+   - Node.js 20 or later (npm 9 ships with Node 20).
    - Supabase project in EU-West with Google OAuth configured.
    - Local `.env` containing `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, rate limit and cache parameters.
 
 2. **Bootstrap the Next.js project**
    ```bash
-   pnpm create next-app cryptopanel --ts --eslint --no-src-dir --app
+   npx create-next-app@latest cryptopanel --ts --eslint --app
    cd cryptopanel
-   pnpm add @supabase/auth-helpers-nextjs @supabase/supabase-js @tanstack/react-query tailwindcss postcss autoprefixer recharts class-variance-authority tailwind-merge @radix-ui/react-slot zod
-   pnpm dlx shadcn-ui@latest init
+   npm install @supabase/auth-helpers-nextjs @supabase/supabase-js @tanstack/react-query tailwindcss postcss autoprefixer recharts class-variance-authority tailwind-merge @radix-ui/react-slot zod
+   npx shadcn-ui@latest init
    ```
    - Configure Tailwind and shadcn/ui as documented.
    - Enable strict TypeScript mode.

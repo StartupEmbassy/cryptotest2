@@ -105,7 +105,7 @@ curl "https://cryptopanel.vercel.app/api/history?symbol=btc&vs=usd&range=7d"
   ]
 }
 ```
-*Field notes:* `t` represents the Unix timestamp in milliseconds and `p` represents the price in the requested base currency. The array is sorted chronologically (oldest to newest).
+*Field notes:* The response includes the requested metadata and a chronological `series` array of `{ "t": <epoch_ms>, "p": <number> }` pairs expressed in the requested base currency.
 
 ### Response Headers
 - `Cache-Control: public, s-maxage=60, stale-while-revalidate=120`
@@ -164,7 +164,7 @@ curl "https://cryptopanel.vercel.app/healthz"
 - Validation library: use Zod schemas for all API handlers.
 
 ## Cache Strategy
-- **Client-side (React Query):** `staleTime = 60000 ms`, `cacheTime = 300000 ms`, `refetchInterval = 60000 ms`.
+- **Client-side (React Query):** `staleTime = 60000 ms`, `gcTime = 300000 ms`, `refetchInterval = 60000 ms`.
 - **Server-side (HTTP headers):** `s-maxage=60`, `stale-while-revalidate=120`.
 - **Rationale:** balance freshness with reduced CoinGecko API calls.
 
