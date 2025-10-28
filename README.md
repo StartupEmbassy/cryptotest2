@@ -1,170 +1,114 @@
-# LLM-DocKit
+# Panel Dashboard
 
-A reusable documentation scaffold for LLM-assisted software projects. This template provides a complete workflow for managing projects where humans collaborate with LLMs (like Claude, ChatGPT, or others), ensuring consistent documentation, version control, and knowledge handoff between sessions.
+Panel is a web dashboard that shows real-time and historical prices for Bitcoin (BTC) and Ethereum (ETH). The MVP targets a fast, secure client-side Next.js application backed by Supabase for authentication and user preferences. Users choose their base currency and timezone, refresh data manually or automatically, and admins get a small role-gated section.
 
-## Why LLM-DocKit?
+This repository hosts the complete documentation blueprint. Implementation work should follow the contracts and constraints described here.
 
-When working with LLMs on software projects, you need:
-- **Clear rules** for how LLMs should work (language, commits, versioning)
-- **Session continuity** so the next LLM knows what happened before
-- **Documentation discipline** that keeps context synchronized
-- **Version management** that prevents breaking changes
-- **Handoff protocol** for multi-LLM or human+LLM collaboration
+## MVP Scope
+- Google login through Supabase (EU-West project)
+- Dashboard with two spot price cards (BTC, ETH) and a historical chart
+- Historical ranges: 24h, 7d, 30d fetched on demand through our backend
+- Auto refresh every 60 seconds plus manual refresh controls
+- User-level settings: base currency (default USD) and timezone (default Europe/Madrid)
+- Roles: `user` and `admin`; `/admin` displays content only to admins
+- No SEO requirements; everything renders client-side
+- Market data pulled from CoinGecko per request (no local persistence)
 
-LLM-DocKit solves this by providing battle-tested templates and workflows.
+## Architecture Overview
+Panel follows a modular-by-feature structure with clear layering:
 
-## Quick Start
+| Layer | Responsibilities | Notes |
+|-------|------------------|-------|
+| Client (Next.js App Router, CSR) | Routes `/`, `/login`, `/settings`, `/admin`; UI components for cards, chart, controls | Uses React Query for polling and cache |
+| Feature Hooks and Services | `usePrices`, `useHistory`, `useUserSettings`; orchestrate data fetching | Convert API responses into typed view models |
+| Backend-for-Frontend (Route Handlers) | `/api/prices`, `/api/history`, `/healthz`; validate input, enforce limits, normalize data | Add cache headers, log provider errors |
+| Supabase Auth and DB | Google OAuth, `profiles` table with preferences and roles | RLS ensures users can only view their own row |
+| External Provider | CoinGecko `/simple/price` and `/market_chart` | Handle rate limits and provider degradation gracefully |
 
-### 1. Get the Scaffold
-```bash
-# Fork on GitHub (recommended) or clone directly
-git clone https://github.com/<your-username>/LLM-DocKit.git my-new-project
-cd my-new-project
-```
+See `docs/PROJECT_CONTEXT.md` for extended context.
 
-### 2. After Cloning - Critical First Steps
+## Feature Modules
+Repository code will live under `src/features/<feature>`:
 
-**Before writing any code**, complete these essential setup tasks:
+- `auth` - Session helpers, Google login, route guards
+- `market` - Spot and historical price fetching along with chart adapters
+- `settings` - User preference forms and Supabase updates
+- `admin` - Admin-only UI banner or user summary
+- `infra` - Rate limiting, shared config, health check, logging utilities
 
-1. **Replace all placeholders** - Search and replace `<PROJECT_NAME>`, `<CONVERSATION_LANGUAGE>`, and `<YYYY-MM-DD>` throughout all `.md` files (see [HOW_TO_USE.md](HOW_TO_USE.md#2-replace-project-name-placeholders) for commands)
-2. **Remove unused directories** - Delete `src/`, `scripts/`, or `tests/` if you don't need them
-3. **Review .gitignore** - Customize for your tech stack (Python, Node.js, Go, etc.)
-4. **Verify all links work** - Check that file references in documentation point to existing files
+Each module should separate UI (`components/`), hooks (`hooks/`), services (`services/`), API handlers (`api/`), and shared types (`types/`) with files kept close to 100 lines.
 
-**Why this matters**: Skipping these steps means placeholders will leak into your commits and documentation links will break.
+## Key Contracts
+### Pages
+- `/login` - Google sign-in, redirects to `/` after a valid session
+- `/` - Dashboard with BTC/ETH spot cards and a history chart with range selector
+- `/settings` - Form to edit base currency and timezone; session required
+- `/admin` - Visible only to admins; otherwise shows blocked message
 
-### 3. Follow the Setup Guide
-Read **[HOW_TO_USE.md](HOW_TO_USE.md)** for complete instructions.
+### API Routes
+- `GET /api/prices?symbols=btc,eth&vs=usd`
+  - Response: `{ "<symbol>": { "price": number, "ts": epoch_ms } }`
+  - Cache headers: `s-maxage=60`, `stale-while-revalidate=120`
+  - Rate limit: 60 requests per minute per IP
+- `GET /api/history?symbol=btc&vs=usd&range=24h`
+  - Response: ordered array of `{ "t": epoch_ms, "p": number }`
+  - Same cache headers and rate limit as `/api/prices`
+- `GET /healthz`
+  - Response: `{ "status": "ok", "version": string, "time": ISO string, "env": "prod" }`
 
-**5-minute version:**
-1. Update [docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md) with your project vision
-2. Customize [LLM_START_HERE.md](LLM_START_HERE.md) rules for your workflow
-3. Document your structure in [docs/STRUCTURE.md](docs/STRUCTURE.md)
-4. Start your first LLM session!
+Any invalid input returns `400`, rate limit exhaustions return `429`, provider errors return `502`, and unexpected failures return `500`.
 
-### 4. Share with Your LLM
-Before each work session, give your LLM this file: **[LLM_START_HERE.md](LLM_START_HERE.md)**
+### Data Model
+Supabase `profiles` table:
 
-## What's Included
+| Column | Type | Notes |
+|--------|------|-------|
+| `id` | `uuid` | Primary key, matches `auth.users.id` |
+| `email` | `text` | Unique |
+| `role` | `text` enum (`user`, `admin`) | Default `user`; admins can read all rows |
+| `base_currency` | `text` | Default `USD` |
+| `tz` | `text` | Default `Europe/Madrid` |
+| `created_at` | `timestamptz` | Default `now()` |
 
-### Core Documentation
-- **[LLM_START_HERE.md](LLM_START_HERE.md)** - Mandatory reading for all LLMs (rules, workflow, policies)
-- **[HOW_TO_USE.md](HOW_TO_USE.md)** - Setup guide for humans after forking
-- **[docs/PROJECT_CONTEXT.md](docs/PROJECT_CONTEXT.md)** - Template for project vision, architecture, and status
-- **[docs/STRUCTURE.md](docs/STRUCTURE.md)** - Document your repository organization
-- **[docs/VERSIONING_RULES.md](docs/VERSIONING_RULES.md)** - Semantic versioning guidelines
+RLS policies: users can read/update only their record; admins can select all rows.
 
-### LLM Handoff System
-- **[docs/llm/HANDOFF.md](docs/llm/HANDOFF.md)** - Current work state and priorities (updated every session)
-- **[docs/llm/HISTORY.md](docs/llm/HISTORY.md)** - Chronological log of all changes (append-only)
+## Tech Stack
+- Framework: Next.js (App Router) with client-side rendering only
+- Language: TypeScript with strict configuration
+- UI: Tailwind CSS plus shadcn/ui primitives
+- State and fetching: React Query with 60 second polling
+- Charts: Recharts line chart
+- Auth and DB: Supabase (Google OAuth, Postgres with RLS)
+- Deployment: Vercel (EU) for app, Supabase (EU-West) for auth/DB
+- Observability: structured server logs, `/healthz` endpoint
 
-### Operations & Runbooks
-- **[docs/operations/](docs/operations/)** - Placeholder for operational procedures, deployment guides, incident response
+## Configuration
+- Environment variables: Supabase URL, Supabase anon key, rate limit and cache defaults
+- Store defaults in `src/config`
+- Do not commit secrets; `.env.example` will document placeholders
 
-### Optional Boilerplate
-- **src/** - Source code (remove if not needed)
-- **tests/** - Test suites (remove if not needed)
-- **scripts/** - Utility scripts (remove if not needed)
-- **.github/** - GitHub issue/PR templates (remove if not using GitHub)
+## Testing Strategy
+- Contract tests for `/api/prices` and `/api/history` with mocked CoinGecko responses
+- Utility tests covering currency and timezone formatting helpers
+- Access control tests ensuring protected routes redirect to `/login` when no session is present
 
-## Features
+## Operations and Deployment
+- Single production environment initially
+- Vercel preview deployments optional; production deploys from `main`
+- Supabase migration script must be idempotent
+- Rate limiting implemented in the BFF with caveats documented for serverless scale-out
+- Rollbacks: revert to previous Vercel deployment and use reversible DB migrations
 
-### Multi-LLM Collaboration
-Different LLMs can work on the same project by reading [docs/llm/HANDOFF.md](docs/llm/HANDOFF.md) to understand current state.
-
-### Automatic Documentation
-Every LLM session must update documentation, ensuring nothing is lost between sessions.
-
-### Version Management
-Semantic versioning rules prevent breaking changes and keep components synchronized.
-
-### "Do Not Touch" Zones
-Mark critical code areas that shouldn't be modified without explicit permission.
-
-### Language Flexibility
-Configure conversation language (Spanish, English, etc.) while keeping code/docs in English.
-
-### Commit Message Standards
-Every LLM response includes suggested commit info (title + description) for consistency.
-
-## Typical Workflows
-
-### For Web Applications
-```
-src/
-  frontend/    # React, Vue, etc.
-  backend/     # API server
-tests/
-docs/
-```
-
-### For Infrastructure Projects
-```
-infrastructure/
-  terraform/
-  kubernetes/
-scripts/        # Deployment automation
-docs/
-  operations/   # Critical runbooks
-```
-
-### For Python Libraries
-```
-src/
-  package_name/
-tests/
-docs/
-```
-
-### For CLI Tools
-```
-cli/           # Renamed from src/
-  commands/
-scripts/       # Build/release
-docs/
-```
-
-See [HOW_TO_USE.md](HOW_TO_USE.md#common-scenarios) for detailed examples.
-
-## Documentation Philosophy
-
-This scaffold enforces documentation discipline through:
-
-1. **Mandatory updates** - LLMs must update HANDOFF and HISTORY after every change
-2. **Single source of truth** - HANDOFF.md contains current state, HISTORY.md contains the full timeline
-3. **Clear rules** - LLM_START_HERE.md defines non-negotiable policies
-4. **Context preservation** - New LLMs (or humans) can quickly understand project state
-
-## Real-World Example
-
-This scaffold was extracted from [PiHA-Deployer](https://github.com/cdchushig/PiHA-Deployer), a home automation infrastructure project. After successfully using this workflow across multiple LLM sessions (Claude, ChatGPT, Codex), the structure was generalized into LLM-DocKit.
-
-## Who Should Use This?
-
-- Developers working with LLM assistants (Claude, ChatGPT, etc.)
-- Teams collaborating with multiple LLMs on the same project
-- Projects requiring strict documentation discipline
-- Long-running projects where context must be preserved across sessions
-- Solo developers who want better documentation habits
-
-## Getting Help
-
-- Read the [complete setup guide](HOW_TO_USE.md)
-- [Report issues](https://github.com/cdchushig/LLM-DocKit/issues)
-- [Suggest improvements](https://github.com/cdchushig/LLM-DocKit/pulls)
-- Check the [PiHA-Deployer example](https://github.com/cdchushig/PiHA-Deployer)
-
-## Contributing
-
-This scaffold is meant to be forked and adapted. If you develop improvements that could benefit others:
-1. Fork this repository
-2. Make your enhancements
-3. Submit a pull request with a clear description
-
-## License
-
-Released under the MIT License. See [LICENSE](LICENSE) for details.
+## Documentation Map
+- LLM Guide: `LLM_START_HERE.md`
+- Getting Started: `HOW_TO_USE.md`
+- Project Context: `docs/PROJECT_CONTEXT.md`
+- Repository Structure: `docs/STRUCTURE.md`
+- Version Policy: `docs/VERSIONING_RULES.md`
+- Active Work: `docs/llm/HANDOFF.md`
+- Change Log: `docs/llm/HISTORY.md`
+- Runbooks: `docs/operations/`
 
 ---
 
-**Ready to start?** Read [HOW_TO_USE.md](HOW_TO_USE.md) and launch your first LLM-assisted project!
+Panel is currently in planning. Follow these documents to keep the implementation aligned with the agreed specification.

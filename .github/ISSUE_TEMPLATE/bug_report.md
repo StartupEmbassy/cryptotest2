@@ -1,25 +1,30 @@
 ---
 name: Bug Report
-about: Report an issue with the project
+about: Report an issue with the Panel project
 title: "[Bug]: "
 labels: bug
 assignees: ""
 ---
 
 ## Summary
-Describe the problem and expected behaviour.
+- Current behaviour:
+- Expected behaviour:
+- Affected route or feature (`/`, `/settings`, `/admin`, `/api/*`, etc.):
 
 ## Steps to Reproduce
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 ## Impact
-- Affected users or environments:
-- Severity:
+- User roles affected (user/admin):
+- Environment (local, preview, prod):
+- Severity (blocker/high/medium/low):
 
 ## Logs / Screenshots
-Attach relevant snippets or images (remove sensitive data).
+- Include relevant server logs or console output (scrub sensitive data).
+- Add request IDs if available.
 
 ## Additional Context
-Add any other details, links, or dependencies.
+- Related changes or deployments:
+- Relevant configuration (currency, timezone, etc.):

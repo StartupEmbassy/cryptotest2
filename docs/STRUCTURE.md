@@ -1,36 +1,71 @@
-# Repository Structure Guide
+# Repository Structure Guide - Panel
 
-Use this template to document how the repository is organized. Update the table below once your folders and files are in place.
+Panel uses a feature-first organisation to keep the MVP modular and easy to extend.
 
-## Top-Level Layout
-`
-<PROJECT_ROOT>/
-+- README.md
-+- LLM_START_HERE.md
-+- docs/
-+- src/ (optional)
-+- scripts/ (optional)
-+- tests/ (optional)
-+- .github/ (optional)
-+- ...
-`
+## Top-level layout
+```
+panel/
+|-- README.md
+|-- LLM_START_HERE.md
+|-- HOW_TO_USE.md
+|-- docs/
+|-- src/
+|   |-- app/
+|   |-- config/
+|   |-- features/
+|   |-- lib/
+|   |-- types/
+|-- tests/
+|-- scripts/
+`-- .github/
+```
 
-## Directory Descriptions
+## Directory descriptions
 | Path | Purpose | Notes |
 |------|---------|-------|
-| docs/ | Central documentation, policies, and runbooks | Required |
-| docs/llm/ | Handoff and history for LLM contributors | Required |
-| docs/operations/ | Runbooks and operational procedures | Recommended |
-| src/ | Application or library source code | Optional |
-| scripts/ | Utility scripts or tooling | Optional |
-| tests/ | Automated tests | Optional |
-| .github/ | Issue/PR templates and workflows | Optional |
+| `docs/` | Project documentation, policies, runbooks | Keep in sync with implementation |
+| `docs/llm/` | Handoff and history for LLM sessions | Update every session |
+| `docs/operations/` | Operational runbooks | Document deploy, incident, rollback steps |
+| `src/app/` | Next.js routes and layouts | CSR only |
+| `src/config/` | Defaults, env parsing, runtime config | Provide typed values |
+| `src/features/` | Feature modules (`auth`, `market`, `settings`, `admin`, `infra`) | Each feature has `components/`, `hooks/`, `services/`, `api/`, `types/` |
+| `src/lib/` | Shared helpers (date, currency, supabase client) | Keep dependency graph shallow |
+| `src/types/` | Shared contracts derived from API/DB | Re-exported where needed |
+| `tests/` | Unit, integration, and e2e tests | Subfolders by level |
+| `scripts/` | Idempotent scripts (migrations, checks) | No business logic here |
+| `.github/` | Issue/PR templates, CI workflows | Align checklists with project rules |
 
-## Custom Modules or Packages
-Document any additional folders specific to your project. Explain how they relate to the architecture in docs/PROJECT_CONTEXT.md.
+## Feature module layout
+```
+src/features/<feature>/
+|-- components/
+|-- hooks/
+|-- services/
+|-- api/
+`-- types/
+```
+- `components/`: Presentational React components (Tailwind + shadcn/ui).
+- `hooks/`: React hooks combining React Query and feature logic.
+- `services/`: Calls to internal API or Supabase plus adapters.
+- `api/`: Route handlers and helpers for validation, rate limit, error mapping.
+- `types/`: Feature specific TypeScript types; expose public contracts here.
 
-## Naming Conventions
-Outline conventions for file names, branches, environment variables, or other project-wide patterns.
+## Naming conventions
+- Files use `kebab-case.ts` or `kebab-case.tsx`. Hooks use `use-name.ts`.
+- Tests use suffix `.test.ts` (unit/integration) and `.spec.ts` (e2e).
+- Branch names: `feature/<short>`, `fix/<short>`, `docs/<short>`.
+- Environment variables use `NEXT_PUBLIC_` prefix only when required on the client.
+- Commit messages follow the template in `LLM_START_HERE.md`.
 
-## Onboarding Notes
-Provide tips for new contributors (human or LLM) on where to start, which directories to explore first, and any caveats about legacy code or experimental features.
+## Onboarding notes
+- Read `docs/PROJECT_CONTEXT.md` and `LLM_START_HERE.md` first.
+- Initial deliverables: Supabase migration, Next.js scaffold, API handlers.
+- Keep files small; split components or hooks when approaching 100 lines.
+- Document decisions or open questions in `docs/llm/HANDOFF.md`.
+
+## MVP validation metrics
+- Time to first update (TTFU) under 2 seconds in EU.
+- `/api/prices` P95 latency under 600 ms, `/api/history` P95 under 1200 ms.
+- API error rate (5xx) under 1 percent.
+- Polling and manual refresh both operational.
+- Currency/timezone changes persist and show up immediately in UI.

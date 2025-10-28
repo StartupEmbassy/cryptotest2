@@ -1,90 +1,101 @@
-# LLM Start Guide - <PROJECT_NAME>
+# LLM Start Guide - Panel
 
-## Read This First (Mandatory)
+Welcome to **Panel**, a crypto price dashboard project. Read this document from top to bottom before touching any code or docs and keep it open while you work.
 
-Welcome to <PROJECT_NAME>. Before you contribute, review and adapt the sections below to match the project requirements. Replace angle-bracket placeholders (<...>) with real values and share this file with every LLM agent.
+## Reading Order
+1. This file (rules and expectations)
+2. `docs/PROJECT_CONTEXT.md` (vision, architecture, status)
+3. `docs/STRUCTURE.md` (repository layout)
+4. `docs/VERSIONING_RULES.md` (version policy)
+5. `docs/llm/HANDOFF.md` (current focus)
 
-Recommended reading order:
-1. This file (rules, workflows, and current expectations)
-2. docs/PROJECT_CONTEXT.md (vision, architecture, current state)
-3. docs/VERSIONING_RULES.md (version management policy)
-4. docs/llm/HANDOFF.md (current work state and priorities)
+## Critical Rules (non negotiable)
 
-## Critical Rules (Non-Negotiable)
+### Language policy
+- Code, documentation, and comments: English
+- Conversation with the user: Spanish
+- File names and commits: English
 
-### Language Policy
-- All code and documentation: English (update if your project needs a different language)
-- Conversation with the user: <CONVERSATION_LANGUAGE>
-- Comments in code: English
-- File names: English
+### Architectural guardrails
+- Framework must be Next.js App Router in **CSR** mode. No SSR/SSG.
+- Organise code by feature folders (`auth`, `market`, `settings`, `admin`, `infra`).
+- Keep files under ~100 lines when practical; factor if they grow.
+- Separate concerns: UI components / hooks / services / API handlers / utilities.
+- Validate every API input and return controlled errors (400, 429, 500, 502).
+- Use React Query for polling (60 seconds) and caching; do not introduce other global state managers.
 
-### Documentation Update Rules
-- Update docs/llm/HANDOFF.md every time you make a change.
-- Append an entry to docs/llm/HISTORY.md in every session.
-- HISTORY format: YYYY-MM-DD - <LLM_NAME> - <Brief summary> - Files: [list] - Version impact: [yes/no + details]
+### Documentation duties
+- Update `docs/llm/HANDOFF.md` at the end of every session.
+- Append a log entry to `docs/llm/HISTORY.md` using  
+  `YYYY-MM-DD - <LLM_NAME> - <Summary> - Files: [list] - Version impact: <yes/no + detail>`
 
-### Commit Message Policy
-- Every response that includes code or documentation changes must end with suggested commit information:
-  - **Title:** under 72 characters
-  - **Description:** under 200 characters, focused on user impact and why the change matters
-- Format:
-  `
-  ## Commit Info
-  **Title:** <concise title>
-  **Description:** <short explanation of what changed and why>
-  `
+### Commit format
+End any response that changes code or docs with:
+```
+## Commit Info
+**Title:** <up to 72 chars>
+**Description:** <up to 200 chars explaining what and why>
+```
 
-### Version Management
-- Check VERSION declarations in scripts or modules before editing.
-- Do not bump versions without consulting docs/VERSIONING_RULES.md.
-- Synchronize version numbers across related files when changes span multiple scripts.
+### Versioning
+- Review `docs/VERSIONING_RULES.md` before touching versions.
+- Keep related version numbers in sync (package.json, migrations, constants).
 
-### Environment Files (If Applicable)
-- Do not edit generated .env.example files directly.
-- Never change or remove existing credentials in .env or equivalent secret stores.
-- If a new variable is needed, document it in the relevant README and ask the user to add it manually.
+### Testing expectations
+- Contract tests for `/api/prices` and `/api/history` (input validation, shape).
+- Utility tests for currency and timezone formatting.
+- Access tests proving protected routes redirect to `/login` without a session.
 
-## Current Focus (Snapshot)
+### Environment
+- Never commit real secrets.
+- Document new environment variables in README and `.env.example`.
+- Deployment and script steps must be idempotent.
 
-Source of truth: docs/llm/HANDOFF.md.
-- Last Updated: <YYYY-MM-DD - Author>
-- Working on: <Feature or task>
-- Status: <Short status summary>
+## Current snapshot
+- Last Updated: 2025-10-28 - ChatGPT
+- Working on: Documentation baseline for Panel MVP
+- Status: Architecture and contracts captured; implementation not started
 
-Keep this section synchronized with the "Current Status" block in docs/llm/HANDOFF.md.
+Keep this block in sync with `docs/llm/HANDOFF.md`.
 
-## Getting Started Checklist
-- [ ] Read this entire file and update placeholders
-- [ ] Review docs/PROJECT_CONTEXT.md
-- [ ] Review docs/VERSIONING_RULES.md
-- [ ] Read the current docs/llm/HANDOFF.md
+## Session checklist
+- [ ] Read this file end to end
+- [ ] Review `docs/PROJECT_CONTEXT.md`
+- [ ] Review `docs/STRUCTURE.md`
+- [ ] Review `docs/VERSIONING_RULES.md`
+- [ ] Read `docs/llm/HANDOFF.md`
 - [ ] Confirm scope with the user
-- [ ] Complete the work
-- [ ] Update docs/llm/HANDOFF.md
-- [ ] Add an entry to docs/llm/HISTORY.md
+- [ ] Do the work
+- [ ] Update HANDOFF and HISTORY
 
-## Customization Notes for Maintainers
-- Replace <PROJECT_NAME> with the actual project name.
-- Define the conversation language (or remove the rule if not applicable).
-- Remove or adapt any sections that do not align with your workflow (e.g., environment file policy).
-- Populate docs/STRUCTURE.md with details about your repository layout.
+## Feature map
+| Feature | Responsibility | Key constraints |
+|---------|----------------|-----------------|
+| auth | Supabase session, Google login, route guards | Use Supabase JS helpers, handle loading states |
+| market | Spot and history data | Consume `/api/prices` and `/api/history`, adapt to UI |
+| settings | User preferences (currency, timezone) | Read/write `profiles` with RLS |
+| admin | Admin only announcement/banner | Do not expose sensitive user data |
+| infra | Rate limiting, config, health check, utilities | Centralise constants and logging |
 
-## Quick Navigation
-- Project Overview: docs/PROJECT_CONTEXT.md
-- Version Rules: docs/VERSIONING_RULES.md
-- Current Work State: docs/llm/HANDOFF.md
-- Change History: docs/llm/HISTORY.md
-- Runbooks: docs/operations/
+## API quick reference
+- `GET /api/prices?symbols=btc,eth&vs=usd` -> `{ btc: { price, ts }, ... }`
+- `GET /api/history?symbol=btc&vs=usd&range=24h|7d|30d` -> `[ { t, p }, ... ]`
+- Rate limit: 60 requests per minute per IP. Cache headers: `s-maxage=60`, `stale-while-revalidate=120`.
+- `GET /healthz` -> `{ status: "ok", version, time, env }`
 
-## LLM-to-LLM Communication
-When handing off to another LLM:
-1. Update docs/llm/HANDOFF.md with the current state and next steps.
-2. Append an entry to docs/llm/HISTORY.md following the required format.
-3. Ensure the snapshot in this file matches the latest status.
+## Data model
+Supabase `profiles` table:  
+`id uuid PK`, `email text unique`, `role text user|admin default user`, `base_currency text default USD`, `tz text default Europe/Madrid`, `created_at timestamptz default now()`.  
+RLS: users can access only their row; admins can select all rows.
 
-## Do Not Touch Zones
-Use the Do Not Touch section in docs/llm/HANDOFF.md to flag any files or areas that must remain unchanged without explicit approval from the user.
+## Handoff process
+1. Finish your task.
+2. Update `docs/llm/HANDOFF.md` with status and next steps.
+3. Add the HISTORY entry.
+4. Ensure this snapshot matches the HANDOFF file.
 
----
+## Do not touch
+- Respect any items listed in `docs/llm/HANDOFF.md > Do Not Touch`.
 
-Every change must be documented. If you are unsure about a rule, ask the user before proceeding.
+## Questions
+If you hit ambiguity, stop and ask the user before implementing.

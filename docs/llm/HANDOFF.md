@@ -1,39 +1,45 @@
-# LLM Work Handoff
+# LLM Work Handoff - Panel
 
 ## Current Status
-- Last Updated: <YYYY-MM-DD - Author>
-- Session Focus: <What you worked on>
-- Status: <High-level summary>
+- Last Updated: 2025-10-28 - ChatGPT
+- Session Focus: Align all documentation with the Panel MVP specification
+- Status: Documentation updated; implementation work has not started
 
 ## Immediate Context
-Provide any relevant background the next contributor needs. Mention dependencies, prerequisites, or outstanding reviews.
+- Replaced README, LLM_START_HERE, HOW_TO_USE, and all files in `docs/`.
+- Architecture defined around Next.js CSR, Supabase, and CoinGecko.
+- API routes, contracts, and data model captured for future development.
+- Wait for user confirmation before scaffolding code.
 
 ## Active Files
-List the files touched or relevant to the current work stream.
-- <path/to/file>
-- <path/to/another-file>
+- README.md
+- LLM_START_HERE.md
+- HOW_TO_USE.md
+- docs/PROJECT_CONTEXT.md
+- docs/STRUCTURE.md
+- docs/VERSIONING_RULES.md
+- docs/llm/HANDOFF.md
+- docs/llm/HISTORY.md
+- docs/operations/README.md
+- .github/PULL_REQUEST_TEMPLATE.md
+- .github/ISSUE_TEMPLATE/bug_report.md
 
 ## Current Versions
-Document relevant version identifiers if they changed or need monitoring.
-- <component/file>: <version>
+- package.json: not created yet
+- Supabase schema: initial migration pending
 
 ## Top Priorities
-1. <Next action>
-2. <Next action>
-3. <Next action>
+1. Write Supabase migration (profiles table, enum roles, RLS policies).
+2. Scaffold the Next.js App Router project with feature folders and shared config.
+3. Implement `/api/prices` and `/api/history` with validation and rate limiting.
 
 ## Do Not Touch
-Identify areas that should remain unchanged without explicit approval from the user.
-- <component or file>
+- Documentation just updated; coordinate before making structural changes.
 
 ## Open Questions
-Capture unresolved questions or assumptions that need confirmation.
-- <Question or detail>
+- Confirm the content for the admin section (banner vs user summary).
+- Define supported currency list beyond the default USD.
+- Decide whether to adopt an external rate limiting service for production later.
 
 ## Testing Notes
-Summarize the testing performed (manual or automated) and any gaps or follow-up needed.
-- <Test> - <Result>
-
----
-
-Keep this file concise (ideally under two screens) and update it at the end of every session.
+- No tests executed yet; codebase not scaffolded.

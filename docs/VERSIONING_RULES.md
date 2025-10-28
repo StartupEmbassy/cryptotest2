@@ -1,47 +1,50 @@
-# Versioning Rules
+# Versioning Rules - Panel
 
-## Version Format
-Use Semantic Versioning (SemVer): MAJOR.MINOR.PATCH.
+## Version format
+We follow **Semantic Versioning (SemVer)**: `MAJOR.MINOR.PATCH`.
 
-## Version Location
-Document where version identifiers live in your project (e.g., VERSION="x.y.z" at the top of scripts, package.json, or pyproject.toml).
+## Where versions live
+| Artifact | Location | Notes |
+|----------|----------|-------|
+| Web app | `package.json > version` | Mirror in any runtime config if required |
+| Supabase schema | `supabase/migrations/` timestamped folders | Each migration must be idempotent |
+| API contracts | `src/features/*/api/*.ts` exported `API_VERSION` constants (when introduced) | Used for compatibility checks |
 
-Current version sources:
-- <File or module>: <Version>
-- <File or module>: <Version>
+Initial baseline: **0.1.0** (pre-MVP).
 
-## Version Bump Guidelines
+## When to bump
+### Patch (`x.y.Z`)
+- Bug fixes, documentation updates, logging tweaks
+- Non breaking refactors or dependency patch bumps
 
-### Patch (x.y.Z)
-- Bug fixes or documentation updates
-- Non-breaking maintenance tasks
-- Logging improvements or refactoring without behaviour changes
+### Minor (`x.Y.z`)
+- Backward compatible features (extra chart ranges, admin widgets)
+- Optional configuration flags with safe defaults
+- Dependency upgrades that add capabilities without breaking behaviour
 
-### Minor (x.Y.z)
-- Backward-compatible features
-- Optional configuration additions
-- New capabilities that do not break existing workflows
+### Major (`X.y.z`)
+- Breaking API changes or UI flows
+- Schema migrations requiring operator action
+- Removal or renaming of public routes or endpoints
 
-### Major (X.y.z)
-- Breaking changes or required configuration updates
-- Removals or incompatible behaviour changes
-- Large architectural shifts that require operator action
+## Synchronisation rules
+- Update `package.json`, mirrored constants, and docs references in the same commit.
+- Document migration impacts in `docs/llm/HISTORY.md` and point to the migration folder.
+- If API contracts change, update types, tests, and note the version in `docs/llm/HANDOFF.md > Current Versions`.
 
-## Synchronization Rules
-When a change affects multiple files within the same component or module, update all relevant version identifiers to keep them aligned.
+## Update checklist
+1. Decide the bump level (patch, minor, major).
+2. Update `package.json` and any mirrored constants.
+3. Annotate migrations with comments about required follow up.
+4. Run linting and tests; confirm compatibility.
+5. Record the change in HISTORY and refresh the snapshot in HANDOFF.
 
-## Update Process
-1. Determine the impact level (patch, minor, major).
-2. Locate all affected version identifiers.
-3. Update version numbers and document the rationale in docs/llm/HISTORY.md.
-4. Reflect the change in docs/llm/HANDOFF.md (or a dedicated changelog) so the next contributor is aware.
-
-## Environment Variables (If Applicable)
-- Avoid editing generated .env.example files directly; update the source .env or secrets management system and regenerate the template.
-- Never commit real credentials.
-- When adding new variables, document them and communicate the change in docs/llm/HISTORY.md and the relevant README.
+## Environment variables
+- Do not commit real secrets.
+- Add new variables to `.env.example` with comments.
+- Document configuration changes in README and `docs/llm/HISTORY.md`.
 
 ## Tips
-- When in doubt, choose the higher-impact version bump to avoid underreporting changes.
-- Keep versioning consistent between code, documentation, and distribution artifacts.
-- Record every version change in the history log with reasoning.
+- When uncertain, pick the higher impact bump.
+- Group related version edits together to avoid drift.
+- Align Vercel deployments with tagged versions for easier rollback.
