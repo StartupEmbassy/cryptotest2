@@ -1,6 +1,6 @@
-# LLM Start Guide - Panel
+# LLM Start Guide - CryptoPanel
 
-Welcome to **Panel**, a crypto price dashboard project. Read this document from top to bottom before touching any code or docs and keep it open while you work.
+Welcome to **CryptoPanel**, a crypto price dashboard project. Read this document from top to bottom before touching any code or docs and keep it open while you work.
 
 ## Reading Order
 1. This file (rules and expectations)
@@ -53,7 +53,7 @@ End any response that changes code or docs with:
 
 ## Current snapshot
 - Last Updated: 2025-10-28 - ChatGPT
-- Working on: Documentation baseline for Panel MVP
+- Working on: Documentation baseline for CryptoPanel MVP
 - Status: Architecture and contracts captured; implementation not started
 
 Keep this block in sync with `docs/llm/HANDOFF.md`.

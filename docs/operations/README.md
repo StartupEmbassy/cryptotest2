@@ -1,6 +1,6 @@
-# Operations Runbooks - Panel
+# Operations Runbooks - CryptoPanel
 
-Use this directory to store procedures for deploying and operating Panel. Each runbook should be self contained and reference automation or scripts when available.
+Use this directory to store procedures for deploying and operating CryptoPanel. Each runbook should be self contained and reference automation or scripts when available.
 
 ## Suggested runbook outline
 1. Purpose and scope

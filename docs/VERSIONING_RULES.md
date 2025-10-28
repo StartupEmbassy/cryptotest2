@@ -1,4 +1,4 @@
-# Versioning Rules - Panel
+# Versioning Rules - CryptoPanel
 
 ## Version format
 We follow **Semantic Versioning (SemVer)**: `MAJOR.MINOR.PATCH`.

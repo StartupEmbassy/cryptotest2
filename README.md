@@ -1,6 +1,6 @@
-# Panel Dashboard
+# CryptoPanel Dashboard
 
-Panel is a web dashboard that shows real-time and historical prices for Bitcoin (BTC) and Ethereum (ETH). The MVP targets a fast, secure client-side Next.js application backed by Supabase for authentication and user preferences. Users choose their base currency and timezone, refresh data manually or automatically, and admins get a small role-gated section.
+CryptoPanel is a web dashboard that shows real-time and historical prices for Bitcoin (BTC) and Ethereum (ETH). The MVP targets a fast, secure client-side Next.js application backed by Supabase for authentication and user preferences. Users choose their base currency and timezone, refresh data manually or automatically, and admins get a small role-gated section.
 
 This repository hosts the complete documentation blueprint. Implementation work should follow the contracts and constraints described here.
 
@@ -15,7 +15,7 @@ This repository hosts the complete documentation blueprint. Implementation work 
 - Market data pulled from CoinGecko per request (no local persistence)
 
 ## Architecture Overview
-Panel follows a modular-by-feature structure with clear layering:
+CryptoPanel follows a modular-by-feature structure with clear layering:
 
 | Layer | Responsibilities | Notes |
 |-------|------------------|-------|
@@ -105,10 +105,14 @@ RLS policies: users can read/update only their record; admins can select all row
 - Project Context: `docs/PROJECT_CONTEXT.md`
 - Repository Structure: `docs/STRUCTURE.md`
 - Version Policy: `docs/VERSIONING_RULES.md`
+- API Contracts: `docs/API_CONTRACTS.md`
+- Database Schema: `docs/DATABASE_SCHEMA.md`
+- Testing Strategy: `docs/TESTING_STRATEGY.md`
 - Active Work: `docs/llm/HANDOFF.md`
 - Change Log: `docs/llm/HISTORY.md`
+- Monitoring & Alerts: `docs/operations/MONITORING.md`
 - Runbooks: `docs/operations/`
 
 ---
 
-Panel is currently in planning. Follow these documents to keep the implementation aligned with the agreed specification.
+CryptoPanel is currently in planning. Follow these documents to keep the implementation aligned with the agreed specification.

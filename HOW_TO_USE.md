@@ -1,11 +1,15 @@
-# How to Use Panel Docs
+# How to Use CryptoPanel Docs
 
-This repository stores the documentation and operating model for **Panel**, a cryptocurrency price dashboard built with Next.js and Supabase. No application code lives here yet; the goal is to guide humans and LLMs through a consistent implementation of the MVP.
+This repository stores the documentation and operating model for **CryptoPanel**, a cryptocurrency price dashboard built with Next.js and Supabase. No application code lives here yet; the goal is to guide humans and LLMs through a consistent implementation of the MVP.
 
 ## Quick Orientation
 - **Vision and scope** -> `docs/PROJECT_CONTEXT.md`
 - **Architecture and structure** -> `docs/STRUCTURE.md`
 - **Version and release rules** -> `docs/VERSIONING_RULES.md`
+- **API contracts** -> `docs/API_CONTRACTS.md`
+- **Database schema** -> `docs/DATABASE_SCHEMA.md`
+- **Testing strategy** -> `docs/TESTING_STRATEGY.md`
+- **Monitoring & observability** -> `docs/operations/MONITORING.md`
 - **Current status** -> `docs/llm/HANDOFF.md`
 - **Change history** -> `docs/llm/HISTORY.md`
 
@@ -20,8 +24,8 @@ Always share `LLM_START_HERE.md` with any LLM agent before work starts.
 
 2. **Bootstrap the Next.js project**
    ```bash
-   pnpm create next-app panel --ts --eslint --no-src-dir --app
-   cd panel
+   pnpm create next-app cryptopanel --ts --eslint --no-src-dir --app
+   cd cryptopanel
    pnpm add @supabase/auth-helpers-nextjs @supabase/supabase-js @tanstack/react-query tailwindcss postcss autoprefixer recharts class-variance-authority tailwind-merge @radix-ui/react-slot zod
    pnpm dlx shadcn-ui@latest init
    ```

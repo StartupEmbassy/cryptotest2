@@ -1,45 +1,37 @@
-# LLM Work Handoff - Panel
+# LLM Work Handoff - CryptoPanel
 
 ## Current Status
-- Last Updated: 2025-10-28 - ChatGPT
-- Session Focus: Align all documentation with the Panel MVP specification
-- Status: Documentation updated; implementation work has not started
+- Last Updated: 2025-10-28 - Claude
+- Session Focus: Documentation review and technical specifications expansion
+- Status: Base documentation completed by ChatGPT, technical deep-dive files added
 
 ## Immediate Context
-- Replaced README, LLM_START_HERE, HOW_TO_USE, and all files in `docs/`.
-- Architecture defined around Next.js CSR, Supabase, and CoinGecko.
-- API routes, contracts, and data model captured for future development.
-- Wait for user confirmation before scaffolding code.
+ChatGPT created the initial documentation adapting the LLM-DocKit scaffold to CryptoPanel MVP specifications. Claude reviewed the work and added four detailed technical specification files (API_CONTRACTS, DATABASE_SCHEMA, TESTING_STRATEGY, MONITORING). Project name changed from "Panel" to "CryptoPanel". Milestone dates changed to TBD pending implementation planning.
 
 ## Active Files
-- README.md
-- LLM_START_HERE.md
-- HOW_TO_USE.md
-- docs/PROJECT_CONTEXT.md
-- docs/STRUCTURE.md
-- docs/VERSIONING_RULES.md
-- docs/llm/HANDOFF.md
-- docs/llm/HISTORY.md
-- docs/operations/README.md
-- .github/PULL_REQUEST_TEMPLATE.md
-- .github/ISSUE_TEMPLATE/bug_report.md
+- All documentation files in `docs/` directory
+- New technical specs: `docs/API_CONTRACTS.md`, `docs/DATABASE_SCHEMA.md`, `docs/TESTING_STRATEGY.md`, `docs/operations/MONITORING.md`
 
 ## Current Versions
-- package.json: not created yet
-- Supabase schema: initial migration pending
+- package.json: 0.1.0 (not yet created, planned)
 
 ## Top Priorities
-1. Write Supabase migration (profiles table, enum roles, RLS policies).
-2. Scaffold the Next.js App Router project with feature folders and shared config.
-3. Implement `/api/prices` and `/api/history` with validation and rate limiting.
+1. Begin Next.js project setup with feature folder structure
+2. Create Supabase migration using SQL from DATABASE_SCHEMA.md
+3. Implement `/api/prices` endpoint following API_CONTRACTS.md
+4. Set up testing infrastructure per TESTING_STRATEGY.md
 
 ## Do Not Touch
-- Documentation just updated; coordinate before making structural changes.
+- Core documentation structure (maintain LLM-DocKit workflow)
+- Architectural principles (CSR only, feature-first organization)
 
 ## Open Questions
-- Confirm the content for the admin section (banner vs user summary).
-- Define supported currency list beyond the default USD.
-- Decide whether to adopt an external rate limiting service for production later.
+- Exact Vercel deployment region (EU-West specific country?)
+- Initial admin user creation process (manual DB insert?)
+- CoinGecko rate limit handling: implement backoff from day 1 or wait for 429 errors?
+- Test framework final choice: Vitest (recommended) or Jest?
 
 ## Testing Notes
-- No tests executed yet; codebase not scaffolded.
+- No tests exist yet (pre-implementation phase)
+- Testing strategy documented in `docs/TESTING_STRATEGY.md`
+- Minimum coverage: 70% overall, 100% for utilities and validation

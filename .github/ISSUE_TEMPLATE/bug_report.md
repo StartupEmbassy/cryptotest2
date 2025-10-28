@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report an issue with the Panel project
+about: Report an issue with the CryptoPanel project
 title: "[Bug]: "
 labels: bug
 assignees: ""

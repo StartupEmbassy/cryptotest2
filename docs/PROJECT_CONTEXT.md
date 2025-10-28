@@ -1,7 +1,7 @@
-# Project Context - Panel
+# Project Context - CryptoPanel
 
 ## Vision
-Deliver a fast, reliable dashboard for monitoring Bitcoin and Ethereum spot and short range historical prices. Panel should make market checks effortless for analysts and enthusiasts without forcing them into trading platforms.
+Deliver a fast, reliable dashboard for monitoring Bitcoin and Ethereum spot and short range historical prices. CryptoPanel should make market checks effortless for analysts and enthusiasts without forcing them into trading platforms.
 
 ## Objectives
 - Provide authenticated access through Supabase Google sign-in.
@@ -16,12 +16,12 @@ Success criteria are the MVP validation metrics listed in `docs/STRUCTURE.md` (T
 
 ## Stakeholders
 - Product owner: Cristian Del Aguila (`cdela`)
-- Technical owner: Panel engineering team
+- Technical owner: CryptoPanel engineering team
 - Primary users: Market watchers who need quick crypto pricing
 - Additional stakeholders: Operations (Supabase and Vercel maintainers), compliance (user profile privacy)
 
 ## Architectural Overview
-Panel is a client-side rendered Next.js application organised by feature folders. Supabase provides authentication and the `profiles` table with Row Level Security. Route handlers inside the Next.js project function as a backend-for-frontend layer, validating requests, enforcing rate limits, calling CoinGecko, and normalising responses with cache headers. React Query manages polling and caching on the client. Deployment targets Vercel (EU region) for the app and Supabase (EU-West) for auth and data.
+CryptoPanel is a client-side rendered Next.js application organised by feature folders. Supabase provides authentication and the `profiles` table with Row Level Security. Route handlers inside the Next.js project function as a backend-for-frontend layer, validating requests, enforcing rate limits, calling CoinGecko, and normalising responses with cache headers. React Query manages polling and caching on the client. Deployment targets Vercel (EU region) for the app and Supabase (EU-West) for auth and data.
 
 ## Key Components
 | Component | Purpose | Owner | Notes |
@@ -39,11 +39,11 @@ Panel is a client-side rendered Next.js application organised by feature folders
 - Open tasks: create Supabase migration, scaffold Next.js project, implement API handlers.
 
 ## Upcoming Milestones
-1. Complete Supabase schema and RLS policies (2025-11-04).
-2. Scaffold the Next.js project with feature folders and shared config (2025-11-08).
-3. Implement market data flow (API + UI) with React Query polling (2025-11-15).
-4. Finalise settings persistence and admin section (2025-11-18).
-5. Deploy MVP to Vercel and Supabase, validate metrics (2025-11-22).
+1. Complete Supabase schema and RLS policies - **TBD**
+2. Scaffold the Next.js project with feature folders and shared config - **TBD**
+3. Implement market data flow (API + UI) with React Query polling - **TBD**
+4. Finalise settings persistence and admin section - **TBD**
+5. Deploy MVP to Vercel and Supabase, validate metrics - **TBD**
 
 ## References
 - CoinGecko API docs: https://www.coingecko.com/en/api/documentation

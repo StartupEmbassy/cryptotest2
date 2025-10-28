@@ -1,10 +1,10 @@
-# Repository Structure Guide - Panel
+# Repository Structure Guide - CryptoPanel
 
-Panel uses a feature-first organisation to keep the MVP modular and easy to extend.
+CryptoPanel uses a feature-first organisation to keep the MVP modular and easy to extend.
 
 ## Top-level layout
 ```
-panel/
+cryptopanel/
 |-- README.md
 |-- LLM_START_HERE.md
 |-- HOW_TO_USE.md
@@ -19,6 +19,25 @@ panel/
 |-- scripts/
 `-- .github/
 ```
+
+## How `app/` and `features/` Work Together
+
+**Separation of concerns**:
+- `src/app/`: Contains Next.js routes, layouts, and page components (presentation layer)
+- `src/features/`: Contains business logic, hooks, services, and API handlers organized by feature
+
+**Example flow**:
+1. User visits `/` (route defined in `src/app/page.tsx`)
+2. Page component imports `usePrices` hook from `src/features/market/hooks/use-prices.ts`
+3. Hook calls `src/features/market/services/prices-service.ts`
+4. Service makes request to `src/features/market/api/prices/route.ts` (API handler)
+5. API handler validates input, calls CoinGecko, and returns normalized data
+
+**Benefits**:
+- Routes are thin wrappers that compose feature modules
+- Features are testable in isolation
+- Clear dependency graph: `app/` depends on `features/`, never the reverse
+- Easy to locate code: business logic lives in `features/`, presentation in `app/`
 
 ## Directory descriptions
 | Path | Purpose | Notes |
