@@ -31,6 +31,7 @@ pnpm-debug.log*
 node_modules/
 jspm_packages/
 bower_components/
+.next/
 
 # Python
 venv/
@@ -93,6 +94,7 @@ temp/
 coverage/
 .nyc_output/
 test-results/
+playwright-report/
 
 # IDE specific
 .vscode/settings.json

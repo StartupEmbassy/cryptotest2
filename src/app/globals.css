@@ -1,0 +1,16 @@
+/**
+ * @fileoverview Global stylesheet for CryptoPanel.
+ * - Imports Tailwind layers used across the CSR application.
+ * - Applies base layout tokens for dark themed dashboard.
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 min-h-screen;
+}
